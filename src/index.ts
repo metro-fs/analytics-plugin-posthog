@@ -85,6 +85,8 @@ export default function postHog(config: Config) {
       reloadFeatureFlags: (): void => {
         posthog.reloadFeatureFlags();
       },
+
+      getDistinctId: (): string => posthog.get_distinct_id(),
     },
   };
 }

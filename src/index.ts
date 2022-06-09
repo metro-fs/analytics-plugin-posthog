@@ -33,8 +33,10 @@ export default function postHog(config: Config) {
       posthog.capture('$pageview', payload.properties);
     },
 
-    identify: (id: string): void => {
-      posthog.identify(id);
+    identify: ({ payload }: any): void => {
+      if (payload.userId) {
+        posthog.identify(payload.userId);
+      }
     },
 
     reset: (resetDeviceId = false): void => {

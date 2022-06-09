@@ -78,13 +78,14 @@ export default function postHog(config: Config) {
         posthog.onFeatureFlags(callback);
       },
 
-      isFeatureEnabled: (flagName: string, shouldSendEvent = true): void => {
-        posthog.isFeatureEnabled(flagName, { send_event: shouldSendEvent });
-      },
+      isFeatureEnabled: (flagName: string, shouldSendEvent = true): boolean =>
+        posthog.isFeatureEnabled(flagName, { send_event: shouldSendEvent }),
 
       reloadFeatureFlags: (): void => {
         posthog.reloadFeatureFlags();
       },
+
+      getDistinctId: (): string => posthog.get_distinct_id(),
     },
   };
 }

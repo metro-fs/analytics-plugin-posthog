@@ -39,10 +39,6 @@ export default function postHog(config: Config) {
       }
     },
 
-    reset: (resetDeviceId = false): void => {
-      posthog.reset(resetDeviceId);
-    },
-
     loaded: (): boolean => {
       return isPostHogLoaded;
     },
@@ -60,14 +56,13 @@ export default function postHog(config: Config) {
       /**
        * An object with properties to be set on the user that will be associated with the user who triggered the event.
        */
-
       trackAndSet: ({ payload }: any): void => {
         posthog.capture(payload.event, { $set: payload.properties });
       },
+
       /**
        * An object with properties to be set on the user that will be associated with the user who triggered the event, except that it will only set the property if the user doesn't already have that property set.
        */
-
       trackAndSetOnce: ({ payload }: any): void => {
         posthog.capture(payload.event, { $set_once: payload.properties });
       },
@@ -75,19 +70,34 @@ export default function postHog(config: Config) {
       /**
        * The argument callback(flags: string[]) will be called when the feature flags are loaded.
        * In case the flags are already loaded, it'll be called immediately. Additionally, it will also be called when the flags are re-loaded e.g. after calling identify or reloadFeatureFlags.
+       * @param {function} callback
        */
       onFeatureFlags: (callback: (flags?: string[]) => any): void => {
         posthog.onFeatureFlags(callback);
       },
 
-      isFeatureEnabled: (flagName: string, shouldSendEvent = true): boolean =>
+      /**
+       * Checks is the feature flag enabled
+       * @param {string} flagName The name of the feature flag
+       * @param {boolean} shouldSendEvent Whether to send an event when the flag is checked
+       * @returns {boolean} Whether the flag is enabled
+       */
+      isFeatureEnabled: (flagName: string, shouldSendEvent: boolean = true): boolean =>
         posthog.isFeatureEnabled(flagName, { send_event: shouldSendEvent }),
 
       reloadFeatureFlags: (): void => {
         posthog.reloadFeatureFlags();
       },
 
+      /**
+       * Returns the distinct id of the current user.
+       * @returns {string}
+       */
       getDistinctId: (): string => posthog.get_distinct_id(),
+
+      startSessionRecording: (): void => {
+        posthog.startSessionRecording();
+      },
     },
   };
 }

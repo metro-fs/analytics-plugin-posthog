@@ -33,9 +33,19 @@ export default function postHog(config: Config) {
       posthog.capture('$pageview', payload.properties);
     },
 
-    identify: ({ payload }: any): void => {
-      if (payload.userId) {
-        posthog.identify(payload.userId);
+    identify: ({
+      payload,
+    }: {
+      payload: {
+        userId: string;
+        $set?: object;
+        $set_once?: object;
+      };
+    }): void => {
+      const { userId, $set, $set_once } = payload;
+
+      if (userId) {
+        posthog.identify(payload.userId, $set, $set_once);
       }
     },
 

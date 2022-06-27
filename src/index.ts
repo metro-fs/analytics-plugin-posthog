@@ -41,7 +41,7 @@ export default function postHog(config: Config) {
         traits: {
           $set?: object;
           $set_once?: object;
-        }
+        };
       };
     }): void => {
       const { userId } = payload;

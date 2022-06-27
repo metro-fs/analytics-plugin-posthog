@@ -38,11 +38,14 @@ export default function postHog(config: Config) {
     }: {
       payload: {
         userId: string;
-        $set?: object;
-        $set_once?: object;
+        traits: {
+          $set?: object;
+          $set_once?: object;
+        }
       };
     }): void => {
-      const { userId, $set, $set_once } = payload;
+      const { userId } = payload;
+      const { $set, $set_once } = payload.traits;
 
       if (userId) {
         posthog.identify(payload.userId, $set, $set_once);

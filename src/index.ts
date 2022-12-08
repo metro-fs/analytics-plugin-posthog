@@ -1,8 +1,8 @@
+import posthog from 'posthog-js';
+
 /*
  * posthog doc: https://posthog.com/docs/integrate/client/js
  */
-
-import posthog from 'posthog-js';
 
 type Config = {
   token: string;
@@ -10,9 +10,8 @@ type Config = {
   options: posthog.Config;
 };
 
+let isPostHogLoaded = false;
 export default function postHog(config: Config) {
-  let isPostHogLoaded = false;
-
   return {
     name: 'posthog',
 

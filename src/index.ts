@@ -1,8 +1,8 @@
+import posthog from 'posthog-js';
+
 /*
  * posthog doc: https://posthog.com/docs/integrate/client/js
  */
-
-import posthog from 'posthog-js';
 
 type Config = {
   token: string;
@@ -10,9 +10,8 @@ type Config = {
   options: posthog.Config;
 };
 
+let isPostHogLoaded = false;
 export default function postHog(config: Config) {
-  let isPostHogLoaded = false;
-
   return {
     name: 'posthog',
 
@@ -41,11 +40,13 @@ export default function postHog(config: Config) {
         traits: {
           $set?: object;
           $set_once?: object;
-        };
+        } & Record<string, any>;
       };
     }): void => {
       const { userId } = payload;
-      const { $set, $set_once } = payload.traits;
+
+      const $set = payload.traits.$set ?? payload.traits;
+      const $set_once = payload.traits.$set_once ?? {};
 
       if (userId) {
         posthog.identify(payload.userId, $set, $set_once);

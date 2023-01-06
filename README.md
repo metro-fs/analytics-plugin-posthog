@@ -37,3 +37,25 @@ export default analytics;
 ## Usage
 Just use the analytics library as usually, e.g. `analytics.track(eventName, eventValue);`.  
 If you want to use custom PostHog methods, use: `analytics.plugins.posthog.onFeatureFlags(this.onFeatureFlagsReady)`. Please remember about the TypeScript issue mentioned earlier.
+
+### Identify
+You can use default behavior of all Analytics plugins and then all user traits will
+end up as `$set` property and `$set_once` will be empty.
+
+Or you can manually specify `$set` and `$set_once`, that will override all other traits:
+
+```js
+analytics.identify(userId, {
+  propertyName1: 'value1',
+  propertyName2: 'value2',
+  $set: {
+    propertyName3: 'value2-overriden',
+    propertyName4: 'value3',
+  },
+  $set_once: {
+    propertyName5: 'value4',
+  }
+})
+```
+
+that will ignore `propertyName1` and `propertyName2` and send `$set` and `$set_once` directly

@@ -1,4 +1,4 @@
-import posthog from 'posthog-js';
+import posthog, { PostHogConfig } from 'posthog-js';
 
 /*
  * posthog doc: https://posthog.com/docs/integrate/client/js
@@ -7,7 +7,7 @@ import posthog from 'posthog-js';
 type Config = {
   token: string;
   enabled: boolean;
-  options: posthog.Config;
+  options: PostHogConfig;
 };
 
 let isPostHogLoaded = false;
@@ -18,8 +18,8 @@ export default function postHog(config: Config) {
     initialize: (): void => {
       if (config.enabled) {
         posthog.init(config.token, {
-          loaded: () => (isPostHogLoaded = true),
           ...config.options,
+          loaded: () => (isPostHogLoaded = true),
         });
       }
     },

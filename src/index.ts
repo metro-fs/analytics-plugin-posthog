@@ -7,7 +7,7 @@ import posthog, { PostHogConfig } from 'posthog-js';
 type Config = {
   token: string;
   enabled: boolean;
-  options: PostHogConfig;
+  options: Partial<PostHogConfig>;
 };
 
 let isPostHogLoaded = false;

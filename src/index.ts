@@ -1,4 +1,4 @@
-import posthog, { PostHogConfig } from 'posthog-js';
+import posthog, { PostHogConfig, Properties } from 'posthog-js';
 
 /*
  * posthog doc: https://posthog.com/docs/integrate/client/js
@@ -60,8 +60,14 @@ export default function postHog(config: Config) {
     // Custom PostHog's functions to expose to analytics instance
     methods: {
       /**
+       * Method wrapper for PostHog "group" method - https://posthog.com/docs/product-analytics/group-analytics#setting-and-updating-group-properties
+       */
+      group: (groupName: string, groupId: string, groupData?: Properties) => {
+        posthog.group(groupName, groupId, groupData);
+      },
+      /**
        * Super Properties are properties associated with events that are set once and then sent with every capture call, be it a $pageview, an autocaptured button click, or anything else.
-       * They are set using posthog.register, which takes a properties object as a parameter, and they persist across sessions.
+       * They are set using "posthog.register", which takes a properties object as a parameter, and they persist across sessions.
        */
       register: ({ payload }: any) => {
         posthog.register(payload.properties);

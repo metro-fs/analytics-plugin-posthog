@@ -59,6 +59,9 @@ export default function postHog(config: Config) {
 
     // Custom PostHog's functions to expose to analytics instance
     methods: {
+      /** To avoid exposing every method one-by-one, lets exposed scoped instance of posthog itself */
+      getPostHogInstance: () => posthog,
+
       /**
        * Method wrapper for PostHog "group" method - https://posthog.com/docs/product-analytics/group-analytics#setting-and-updating-group-properties
        */

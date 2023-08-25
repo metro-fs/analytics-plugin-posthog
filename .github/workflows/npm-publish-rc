@@ -1,0 +1,29 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: NPM Publish Release Candidate
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v\d+.\d+.\d+-rc.\d+'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+          scope: '@cashrent'
+      - run: npm ci --legacy-peer-deps
+      - run: npm run build
+      - run: npm publish --tag rc
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -57,6 +57,9 @@ export default function postHog(config: Config) {
       return isPostHogLoaded;
     },
 
+    reset: () => {
+      posthog.reset();
+    },
     // Custom PostHog's functions to expose to analytics instance
     methods: {
       /** To avoid exposing every method one-by-one, lets exposed scoped instance of posthog itself */

@@ -105,7 +105,7 @@ export default function postHog(config: Config) {
        * @param {boolean} shouldSendEvent Whether to send an event when the flag is checked
        * @returns {boolean} Whether the flag is enabled
        */
-      isFeatureEnabled: (flagName: string, shouldSendEvent: boolean = true): boolean =>
+      isFeatureEnabled: (flagName: string, shouldSendEvent: boolean = true): boolean | undefined =>
         posthog.isFeatureEnabled(flagName, { send_event: shouldSendEvent }),
 
       /**
@@ -115,7 +115,7 @@ export default function postHog(config: Config) {
        * @returns {string | boolean | undefined} The flag variant, or undefined if not found
        */
       getFeatureFlag: (flagName: string, shouldSendEvent: boolean = true): string | boolean | undefined =>
-        posthog.getFeatureFlag(flagName),
+        posthog.getFeatureFlag(flagName, { send_event: shouldSendEvent }),
 
       reloadFeatureFlags: (): void => {
         posthog.reloadFeatureFlags();

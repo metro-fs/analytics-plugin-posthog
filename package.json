@@ -42,6 +42,6 @@
     "npm": "8.12.1"
   },
   "dependencies": {
-    "posthog-js": "^1.59.0"
+    "posthog-js": "^1.116.6"
   }
 }

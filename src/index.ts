@@ -10,18 +10,15 @@ type Config = {
   options: Partial<PostHogConfig>;
 };
 
-let isPostHogLoaded = false;
 export default function postHog(config: Config) {
   return {
     name: 'posthog',
+    config,
 
     initialize: (): void => {
-      if (config.enabled) {
-        posthog.init(config.token, {
-          ...config.options,
-          loaded: () => (isPostHogLoaded = true),
-        });
-      }
+      posthog.init(config.token, {
+        ...config.options,
+      });
     },
 
     track: ({ payload }: any): void => {
@@ -53,9 +50,11 @@ export default function postHog(config: Config) {
       }
     },
 
-    loaded: (): boolean => {
-      return isPostHogLoaded;
+    reset: (): void => {
+      posthog.reset();
     },
+
+    loaded: (): boolean => posthog.__loaded,
 
     // Custom PostHog's functions to expose to analytics instance
     methods: {

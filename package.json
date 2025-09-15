@@ -1,6 +1,6 @@
 {
   "name": "@metro-fs/analytics-plugin-posthog",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "PostHog plugin for Analytics",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,6 +42,7 @@
     "npm": "8.12.1"
   },
   "dependencies": {
-    "posthog-js": "^1.116.6"
+    "@rrweb/types": "^2.0.0-alpha.17",
+    "posthog-js": "^1.261.0"
   }
 }
